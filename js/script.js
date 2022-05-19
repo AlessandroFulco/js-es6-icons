@@ -1,5 +1,5 @@
 const arrayIcons = [
-	{
+{
 		name: 'cat',
 		prefix: 'fa-',
 		type: 'animal',
@@ -114,7 +114,6 @@ const arrayIcons = [
 ];
 
 const container = document.getElementById('container');
-const contanerIcon = document.getElementById('container-icon');
 const typeSelect = document.getElementById('filtro');
 
 
@@ -131,22 +130,41 @@ function createElement(arrayIcons) {
 	
 		const icon = document.createElement("i");
 
+		const containerSubTitle = document.createElement('div');
+		container.style.textAlign = "center";
+		const subTitle = document.createElement('h3');
+		subTitle.innerHTML = myName;
+
+		const containerIcon = document.createElement('div')
+		containerIcon.className = 'container-icon';
+		
 		let myClass = myFamily + " " + myPrefix + myName;
 		icon.className = myClass;
 		// Milestone 2
 		// Ciascuna icona ha una proprietà “color”: utilizzare questa proprietà per visualizzare le icone del colore corrispondente.
 		icon.style.color = arrayIcons[i].color;
 		console.log(icon);
-		contanerIcon.append(icon);
+
+		containerSubTitle.append(icon);
+		containerSubTitle.append(subTitle);
+		containerIcon.append(containerSubTitle);
+		container.append(containerIcon);
+		
+		
+		// containerIcon.append(icon);
+		// containerSubTitle.append(subTitle);
+		// containerIcon.append(containerSubTitle);
+		// container.append(containerIcon);
 	}
 }
 
 // Milestone 3
 // Aggiungere alla pagina una select in cui le options corrispondono ai vari tipi di icone (animal, vegetable, user). Quando l’utente seleziona un tipo dalla select, visualizzare solamente le icone corrispondenti.
-
+const opt1 = document.getElementById("selected").selected = "true";
+createElement(arrayIcons);
 typeSelect.addEventListener("change",
 	function() {
-		contanerIcon.innerHTML = "";
+		container.innerHTML = "";
 		let valueSelect = typeSelect.value;
 		if(valueSelect == "animal"){
 			const myAnimals = arrayIcons.filter((item) => item.type === "animal");
