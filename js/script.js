@@ -113,19 +113,45 @@ const arrayIcons = [
 	}
 ];
 console.log(arrayIcons);
-
+// {
+// 	name: 'cat',
+// 	prefix: 'fa-',
+// 	type: 'animal',
+// 	family: 'fas',
+// 	color: 'orange'
+// },
 /*
 	Milestone 1
 	Partendo dalla struttura dati fornita, visualizzare in pagina un box per ogni icona, in cui è presente il nome dell’icona e l’icona stessa.
 */
 
 // creare un div globale
+const container = document.createElement('div');
+container.className = 'container';
+document.body.append(container);
+
+const myType = arrayIcons.map((item, i) => item.type);
+console.log(myType);
 
 // stampare in pagina tutte le icone
+for (let i = 0; i < arrayIcons.length; i++) {
+	const itemIesimo = arrayIcons[i];
+	const icon = document.createElement('i');
+	const myFamily = itemIesimo.family;
+	const myPrefix = itemIesimo.prefix;
+	const myName = itemIesimo.name;
+	icon.className = myFamily + " " + myPrefix + myName;
 
-// creare una funzione che mi crea ogni div
-// creare una variabile d'appoggio per richiamare una funzione che mi unisce le chiavi necessarie per creare l'icona
-// appendere l'icona al conteniore
+	const myColor = itemIesimo.color;
+
+
+
+
+	// appendere l'icona al conteniore
+	const iconContainer = createDivEl();
+	iconContainer.append(icon);
+	container.append(iconContainer);
+}
 
 
 
@@ -133,7 +159,14 @@ console.log(arrayIcons);
 
 
 
-	
+
+
+
+// creare una funzione che mi crea ogni div che conterra l'icona
+function createDivEl(){
+	const divEl = document.createElement('div');
+	return divEl;
+}
 /*
 	Milestone 2
 	Ciascuna icona ha una proprietà “color”: utilizzare questa proprietà per visualizzare le icone del colore corrispondente.
