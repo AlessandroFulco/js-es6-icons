@@ -112,121 +112,59 @@ const arrayIcons = [
 		color: 'blue'
 	}
 ];
-console.log(arrayIcons);
-// {
-// 	name: 'cat',
-// 	prefix: 'fa-',
-// 	type: 'animal',
-// 	family: 'fas',
-// 	color: 'orange'
-// },
-/*
-	Milestone 1
-	Partendo dalla struttura dati fornita, visualizzare in pagina un box per ogni icona, in cui è presente il nome dell’icona e l’icona stessa.
-*/
 
-// creare un div globale
-const container = document.createElement('div');
-container.className = 'container';
-document.body.append(container);
+const container = document.getElementById('container');
+const contanerIcon = document.getElementById('container-icon');
+const typeSelect = document.getElementById('filtro');
 
 
+// Milestone 1
+// Partendo dalla struttura dati fornita, visualizzare in pagina un box per ogni icona, in cui è presente il nome dell’icona e l’icona stessa.
 
-const selectFilter = document.getElementById('filtro');
-
-const myTypeSpec = arrayIcons.map((item) => item.type);
-
-const myIconAnimal = [];
-const myIconVegetable = [];
-const myIconUser = [];
-
-
-
-
-// stampare in pagina tutte le icone
-for (let i = 0; i < arrayIcons.length; i++) {
+function createElement(arrayIcons) {
+	for(let i = 0; i < arrayIcons.length; i++) {
+		const myName = arrayIcons[i].name;
+		const myType = arrayIcons[i].type;
+		const myFamily = arrayIcons[i].family;
+		const myPrefix = arrayIcons[i].prefix;
+		const myColor = arrayIcons[i].color;
 	
-	const itemIesimo = arrayIcons[i];
-	const icon = document.createElement('i');
-	const myFamily = itemIesimo.family;
-	const myPrefix = itemIesimo.prefix;
-	const myName = itemIesimo.name;
-	const myType = itemIesimo.type;
-	icon.className = myFamily + " " + myPrefix + myName;
+		const icon = document.createElement("i");
 
-	// push nell'array esterno
-	if (itemIesimo.type === "animal"){
-		myIconAnimal.push(icon);
-	} else if (itemIesimo.type === "vegetable"){
-		myIconVegetable.push(icon);
-	} else {
-		myIconUser.push(icon);
+		let myClass = myFamily + " " + myPrefix + myName;
+		icon.className = myClass;
+		// Milestone 2
+		// Ciascuna icona ha una proprietà “color”: utilizzare questa proprietà per visualizzare le icone del colore corrispondente.
+		icon.style.color = arrayIcons[i].color;
+		console.log(icon);
+		contanerIcon.append(icon);
 	}
-
-	
-	/*
-	Milestone 2
-	Ciascuna icona ha una proprietà “color”: utilizzare questa proprietà per visualizzare le icone del colore corrispondente.
-	*/
-
-	const myColor = itemIesimo.color;
-	if (itemIesimo.type === "animal"){
-		icon.style.color = myColor;
-	} else if (itemIesimo.type === "vegetable"){
-		icon.style.color = myColor;
-	} else {
-		icon.style.color = myColor;
-	}
-
-	
-	switch(selectFilter.value){
-		case "all":
-			let iconContainer = createDivEl();
-			iconContainer.append(icon);
-			container.append(iconContainer);
-			break;
-		case "animal":
-			iconContainer = createDivEl();
-			iconContainer.append(myIconAnimal[i]);
-			container.append(iconContainer);
-			break;
-		case "vegetable":
-			iconContainer = createDivEl();
-			iconContainer.append(myIconVegetable[i]);
-			container.append(iconContainer);
-			break;
-		case "user":
-			iconContainer = createDivEl();
-			iconContainer.append(myIconUser[i]);
-			container.append(iconContainer);
-	}
-
-	// appendere l'icona al conteniore
-	
 }
 
+// Milestone 3
+// Aggiungere alla pagina una select in cui le options corrispondono ai vari tipi di icone (animal, vegetable, user). Quando l’utente seleziona un tipo dalla select, visualizzare solamente le icone corrispondenti.
 
+typeSelect.addEventListener("change",
+	function() {
+		contanerIcon.innerHTML = "";
+		let valueSelect = typeSelect.value;
+		if(valueSelect == "animal"){
+			const myAnimals = arrayIcons.filter((item) => item.type === "animal");
+			createElement(myAnimals);
+			console.log(myAnimals);
 
+		} else if(valueSelect == "vegetable"){
+			const myVegetable = arrayIcons.filter((item) => item.type === "vegetable");
+			createElement(myVegetable);
+			console.log(myVegetable);
 
-
-
-
-
-console.log(myIconAnimal);
-console.log(myIconVegetable);
-console.log(myIconUser);
-
-
-
-
-// creare una funzione che mi crea ogni div che conterra l'icona
-function createDivEl(){
-	const divEl = document.createElement('div');
-	return divEl;
-}
-
-/*
-Milestone 3
-Aggiungere alla pagina una select in cui le options corrispondono ai vari tipi di icone (animal, vegetable, user). 
-Quando l’utente seleziona un tipo dalla select, visualizzare solamente le icone corrispondenti.
-*/
+		} else if (valueSelect == "user") {	
+			const myUser = arrayIcons.filter((item) => item.type === "user");
+			createElement(myUser);
+			console.log(myUser);
+			
+		} else {
+			createElement(arrayIcons);
+		}
+	}
+);
